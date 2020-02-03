@@ -11,7 +11,7 @@ install_docker() {
                 curl -o ~/Downloads/Docker.dmg https://download.docker.com/mac/stable/Docker.dmg;
                 open ~/Downloads/Docker.dmg;
                 docker_instruction="${WHOAMI}, Complete Docker for Mac installation on your screen. After installation, Docker preferences must \
-                have 5 gigs of memory and 1.5  gigs of swap, minimally, for all ILS-S containers to launch"
+                must match your apps memeory requirements"
                 say ${docker_instruction};
                 echo ${docker_instruction};
             }

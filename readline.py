@@ -24,5 +24,5 @@ languages = open("tests/unit_test_languages.txt", encoding="utf-8")
 
 
 main(languages, encoding, error)
-# ./readline.py utf-8 strict
+# ./readline.py utf-8 replace
 

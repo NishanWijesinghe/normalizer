@@ -13,7 +13,7 @@
 *Input* requirements & **assumptions** on [Truss](https://github.com/trussworks/truss-interview#the-problem-csv-normalization)
 
 - document is in UTF-8. Non-UTF-8 handle by replacing with Unicode Replacement Char.
-    - If that replacement makes data invalid (for example, because it turns a date field into something unparseable), print a warning to stderr 
+    - If that replacement makes data invalid (for example, because it turns a date field into something un-parseable), print a warning to stderr 
     - Then drop the row from output.
 - null timezone = US/Pacific
 - Handle non-existent input file with graceful message
