@@ -1,28 +1,30 @@
 #!/usr/bin/env python3
 
 import sys
-script, encoding, error = sys.argv
+
+script, encoding, error, file_location = sys.argv
 
 
-def main(language_file, encoding, errors):
-    line = language_file.readline()
+def main(input_file, encoder, errors, file_path):
+    reader = input_file.readline()
 
-    if line:
-        print_line(line, encoding, errors)
-        return main(language_file, encoding, errors)
+    if reader:
+        print_line(reader, encoder, errors)
+        return main(input_file, encoder, errors, file_path)
 
 
-def print_line(line, encoding, errors):
-    next_lang = line.strip()
-    raw_bytes = next_lang.encode(encoding, errors=errors)
-    cooked_string = raw_bytes.decode(encoding, errors=errors)
+def print_line(reader, encoder, errors):
+    next_lang = reader.strip()
+
+    raw_bytes = next_lang.encode(encoder, errors=errors)
+    cooked_string = raw_bytes.decode(encoder, "replace")
 
     print(raw_bytes, "<===>", cooked_string)
 
 
-languages = open("tests/unit_test_languages.txt", encoding="utf-8")
+f = open(file_location, encoding="utf-8", newline='')
 
-
-main(languages, encoding, error)
-# ./readline.py utf-8 replace
-
+main(f, encoding, error, file_location)
+# Unit tests:
+# ./readline.py utf-8 replace tests/unit_test_languages.txt
+# ./readline.py utf-16 replace tests/unit_test_languages.txt
