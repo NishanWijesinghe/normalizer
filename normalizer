@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Directory containing one or many CSV inputs:"
+echo "Enter directory containing one or many CSV inputs:"
 read -r host_path
 
 if [ ! -d "$host_path" ]; then
@@ -10,11 +10,15 @@ fi
 
 echo "file(s) to be normalized in $host_path"
 find . -name '*.csv'
-docker stop normalizer
-docker rm normalizer
+docker stop normalizer 2>&1 | grep -v "Error response from daemon: No such container: normalizer"
+docker rm normalizer 2>&1 | grep -v "Error: No such container: normalizer"
 CONTAINER_PATH=/opt/normalizer/inputs
+
+echo "Running docker container from public docker repo"
 docker run --name normalizer --privileged -itd -v $(pwd)/$host_path:$CONTAINER_PATH nishanwij/normalizer:latest
 
 source docker_manager.sh
 create_container_outputs
+
+echo "Creating normalized output CSVs in: $host_path"
 copy_normalized_outputs_to_host
