@@ -1,29 +1,26 @@
 #!/usr/bin/env python3
 
 import sys
-import csv
+
 import pandas as pd
-import datetime as dt  # for general datetime object handling
 import rfc3339 as rfc  # for date object -> date string
-import iso8601 as iso  # for date string -> date object
 
 script, encoding, error, file_location = sys.argv
 
 
 def main(encoder, errors, file_path, debug):
-    print(encoder, errors)
-    input_fd = open(file_path, encoding=encoder, errors=errors, newline='')
-
-    # create a new data frame from CSV input
     try:
+        input_fd = open(file_path, encoding=encoder, errors=errors, newline='')
         reader = pd.read_csv(input_fd, parse_dates=["Timestamp"], encoding=encoder, error_bad_lines=False,
                              warn_bad_lines=True)
-        normalizer(reader, debug)
+        normalizer(reader, debug, file_path)
     except pd.errors.EmptyDataError:
         sys.stderr.write('\nERROR: File name %s is empty' % file_path)
+    except FileNotFoundError:
+        sys.stderr.write('\nERROR: File name %s not found' % file_path)
 
 
-def normalizer(reader, debug):
+def normalizer(reader, debug, file_path):
     if not reader.empty:
         if debug:
             print("\n-----------------------------")
@@ -68,6 +65,8 @@ def normalizer(reader, debug):
         writer["BarDuration"] = writer["BarDuration"].dt.total_seconds()
 
         writer["ZIP"] = writer["ZIP"].apply(str).str.pad(width=5, fillchar='0')
+        writer["ZIP"] = writer["ZIP"].apply(str).str[:5]
+
         writer["FullName"] = writer["FullName"].str.upper()
 
         if debug:
@@ -78,8 +77,16 @@ def normalizer(reader, debug):
             print("-----------------------------\n")
             print(writer["TotalDuration"])
 
-        # reader = csv.DictReader(input_file)
-        # print_all(reader, encoder, errors)
+        output_file_name = '%s_OUTPUT.csv' % file_path\
+            .replace("/", "-") \
+            .replace(".-data-", "") \
+            .replace(".", "") \
+            .replace("/", "") \
+            .replace("-", "") \
+            .replace("inputs", "") \
+            .replace("csv", "")
+
+        writer.to_csv(output_file_name, index=False)
 
 
 def remove_bad_rows(data_frame, column_series, method_validator):
@@ -130,12 +137,3 @@ def output(key, value):
 
 
 main(encoding, error, file_location, debug=True)
-# Unit tests:
-# PASSING:
-# ./read_csv.py utf-8 replace tests/acceptance_sample.csv
-# ./read_csv.py utf-8 strict tests/acceptance_sample.csv
-# ./read_csv.py utf-8 backslashreplace tests/acceptance_test_sample-with-broken-utf8.csv
-# ./read_csv.py utf-8 replace tests/acceptance_test_sample-with-broken-utf8.csv
-# unit_test_bad-hh.mm.ss-broken-utf8.csv
-# NEGATIVE TESTS
-# ./read_csv.py utf-8 strict tests/acceptance_test_sample-with-broken-utf8.csv

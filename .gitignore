@@ -6,3 +6,8 @@
 /.idea/workspace.xml
 README-NISHAN.md
 /.idea/rSettings.xml
+/.idea/encodings.xml
+/output*.csv
+/test/output_.*.csv
+/test/data/*OUTPUT.csv
+
