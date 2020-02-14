@@ -5,7 +5,7 @@ import sys
 import pandas as pd
 import rfc3339 as rfc  # for date object -> date string
 
-script, encoding, error, file_location = sys.argv
+script, encoding, error, file_location, is_debug = sys.argv
 
 
 def main(encoder, errors, file_path, debug):
@@ -22,7 +22,7 @@ def main(encoder, errors, file_path, debug):
 
 def normalizer(reader, debug, file_path):
     if not reader.empty:
-        if debug:
+        if debug == 'True':
             print("\n-----------------------------")
             print("UTF-8 with char replacement DataFrame")
             print(reader)
@@ -30,17 +30,6 @@ def normalizer(reader, debug, file_path):
             print("-----------------------------\n")
 
         writer = reader
-
-        # print("row col index:", writer.loc[3, "Timestamp"])
-        # row = next(writer.iterrows())[1]
-
-        #
-        # """
-        # "NaN" in each_colum
-        #     .drop
-        # """
-        # print("Nishan2:", pd.to_datetime(row, errors='coerce'))
-        # # writer["Timestamp"] = pd.to_datetime(row, errors='coerce')
 
         remove_bad_rows(writer, writer["Timestamp"], pd.to_datetime)
 
@@ -69,7 +58,7 @@ def normalizer(reader, debug, file_path):
 
         writer["FullName"] = writer["FullName"].str.upper()
 
-        if debug:
+        if debug == 'True':
             print("\n-----------------------------")
             print("normalized DataFrame")
             print(writer)
@@ -77,7 +66,7 @@ def normalizer(reader, debug, file_path):
             print("-----------------------------\n")
             print(writer["TotalDuration"])
 
-        output_file_name = '%s_OUTPUT.csv' % file_path\
+        output_file_name = '%s_OUTPUT.csv' % file_path \
             .replace("/", "-") \
             .replace(".-data-", "") \
             .replace(".", "") \
@@ -100,40 +89,4 @@ def remove_bad_rows(data_frame, column_series, method_validator):
                 data_frame.drop(idx, inplace=True)
 
 
-def print_all(reader, encoder, errors):
-    for row in reader:
-        for k, v in row.items():
-            output(k, v)
-
-
-def output(key, value):
-    """
-    Transformation requirements on https://github.com/trussworks/truss-interview#the-problem-csv-normalization
-
-    key: file names [Timestamp,Address,ZIP,FullName,FooDuration,BarDuration,TotalDuration,Notes]
-    value: input field value
-
-    :return:
-
-    output.csv
-
-    """
-    if key == 'Timestamp':
-        print(pd.Timestamp(value))
-    elif key == 'Address':
-        print(value)
-    elif key == 'ZIP':
-        print(value)
-    elif key == 'FullName,':
-        print(value)
-    elif key == 'FooDuration':
-        print(value)
-    elif key == 'BarDuration':
-        print(value)
-    elif key == 'TotalDuration':
-        print(value)
-    elif key == 'Notes':
-        print(value)
-
-
-main(encoding, error, file_location, debug=True)
+main(encoding, error, file_location, is_debug)

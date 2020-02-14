@@ -64,6 +64,8 @@ kill_local_containers() {
 
 if [[ "$cmd" = 'build_run' ]]; then
     build && run
+elif [[ "$cmd" = 'build' ]]; then
+    build
 elif [[ "$cmd" = 'run' ]]; then
     run
 elif [[ "$cmd" = 'create_container_outputs' ]]; then
@@ -73,7 +75,5 @@ elif [[ "$cmd" = 'copy_normalized_outputs_to_host' ]]; then
 elif [[ "$cmd" = 'push' ]]; then
     push
 else
-    echo ""
-    echo "$1 :INVALID COMMAND."
-    exit 1
+    echo "$cmd"
 fi
