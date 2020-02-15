@@ -18,12 +18,10 @@ Files in a directory are normalized. Normalized filename convention:
 
 Outputs are generated in the same directory.
 
-## Sample runtime output
+## Sample run
 
 Example below normalizes directory `test/data` generating normalized files 
 in `test/data`
-
-Here's an example of a sample run:
 
 ```
  ./normalizer        
