@@ -78,11 +78,11 @@ Copying to host ./acceptance_sample_OUTPUT.csv
 
 File normalizer entails:
 
-* Copying from a sample file from host to container
+* Copying a sample file from host to container
 * Running normalize-file in the container
 * Copying normalized output from container to host
 
-For file `sample.csv` here are the commands:
+For file `sample.csv`, run this:
 
 ```
 docker cp ../data/sample.csv normalizer:opt/normalizer/sample.csv  
