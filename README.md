@@ -52,7 +52,8 @@ WARNING: Bad Timestamp dropping row containing 11/ü11/11 11:11:11 AM
 WARNING: Bad Timestamp dropping row containing 5/12/10? 4:48:12 PM
 Normalizing ./inputs/unit_test_bad-hh.mm.ss-broken-utf8.csv
 
-WARNING: Bad Timestamp dropping row containing 1:3�2:33.123Copying to host ./acceptance_test_bad_zip_OUTPUT.csv
+WARNING: Bad Timestamp dropping row containing 1:3�2:33.123
+Copying to host ./acceptance_test_bad_zip_OUTPUT.csv
 
 Creating normalized output CSVs in: test/data
 
