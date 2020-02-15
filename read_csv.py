@@ -85,7 +85,7 @@ def remove_bad_rows(data_frame, column_series, method_validator):
             try:
                 method_validator(row)
             except (ValueError, TypeError):
-                sys.stderr.write('\nWARNING: Bad Timestamp dropping row containing %s' % row)
+                sys.stderr.write('\nWARNING: Bad Timestamp dropping row containing %s\n' % row)
                 data_frame.drop(idx, inplace=True)
 
 
