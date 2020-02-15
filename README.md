@@ -3,7 +3,7 @@
 Normalizer has a directory & file mode.
 
 * Normalizes a `directory` containing [one or many input CSV files.](#directory-normalization)
-* [Normalize one file.](#File normalization)
+* [Normalize one file.](#file-normalization)
 
 *Runtime:* Docker on macOS 10.15.x
 
