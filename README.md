@@ -6,13 +6,12 @@ Normalizes a `directory` containing one or many input CSV files.
 
 Docker on macOS 10.15.x
 
-To run:
+Enter directory containing CSV file(s) when running:
 
 ```
 ./normalizer
-
-Enter directory containing one or many CSV inputs:
 ```
+
 Files in a directory are normalized. Normalized filename convention:
 
 *  `<original_file_name>_OUTPUT.csv`
