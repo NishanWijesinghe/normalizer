@@ -15,9 +15,9 @@ def main(encoder, errors, file_path, debug):
                              warn_bad_lines=True)
         normalizer(reader, debug, file_path)
     except pd.errors.EmptyDataError:
-        sys.stderr.write('\nERROR: File name %s is empty' % file_path)
+        sys.stderr.write('\nERROR: File name %s is empty\n' % file_path)
     except FileNotFoundError:
-        sys.stderr.write('\nERROR: File name %s not found' % file_path)
+        sys.stderr.write('\nERROR: File name %s not found\n' % file_path)
 
 
 def normalizer(reader, debug, file_path):

@@ -48,7 +48,8 @@ Normalizing ./inputs/acceptance_test_sample-with-broken-utf8.csv
 Normalizing ./inputs/empty.csv
 Normalizing ./inputs/null.csv
 
-ERROR: File name ./inputs/null.csv is emptyNormalizing ./inputs/unit_test_bad-date-broken-utf8.csv
+ERROR: File name ./inputs/null.csv is empty
+Normalizing ./inputs/unit_test_bad-date-broken-utf8.csv
 
 WARNING: Bad Timestamp dropping row containing 11/ü11/11 11:11:11 AM
 WARNING: Bad Timestamp dropping row containing 5/12/10? 4:48:12 PMNormalizing ./inputs/unit_test_bad-hh.mm.ss-broken-utf8.csv
