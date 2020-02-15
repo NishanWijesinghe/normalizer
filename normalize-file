@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+export file=$1
+if [ -z "$file" ]
+then
+      echo "file name required"
+      exit 1
+fi
+./read_csv.py utf-8 replace ${file} 'False'

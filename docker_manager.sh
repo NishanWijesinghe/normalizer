@@ -58,8 +58,8 @@ docker_login(){
 }
 
 kill_local_containers() {
-    docker stop ${COMPONENT}
-    docker rm ${COMPONENT}
+    docker stop normalizer 2>&1 | grep -v "Error response from daemon: No such container: normalizer"
+    docker rm normalizer 2>&1 | grep -v "Error: No such container: normalizer"
 }
 
 if [[ "$cmd" = 'build_run' ]]; then

@@ -1,10 +1,13 @@
 # Normalizer
 
-Normalizes a `directory` containing one or many input CSV files.
+Normalizer has a directory & file mode.
 
-## Runtime
+* [Normalizes a `directory` containing one or many input CSV files.](#Directory normalization)
+* [Normalize one file.](#File normalization)
 
-Docker on macOS 10.15.x
+*Runtime:* Docker on macOS 10.15.x
+
+## Directory normalization
 
 Enter directory containing CSV file(s) when running:
 
@@ -18,13 +21,15 @@ Files in a directory are normalized. Normalized filename convention:
 
 Outputs are generated in the same directory.
 
-## Sample run
+### Sample directory normalization
 
 Example below normalizes directory `test/data` generating normalized files 
-in `test/data`
+in `test/data`.
+
+`test/data` is a directory on host macOS
 
 ```
- ./normalizer        
+ ./normalizer
 Enter directory containing one or many CSV inputs:
 test/data
 file(s) to be normalized in test/data
@@ -36,12 +41,17 @@ file(s) to be normalized in test/data
 ./test/data/unit_test_bad-date-broken-utf8.csv
 ./test/data/empty.csv
 ./test/data/acceptance_test_bad_zip.csv
-Running docker container from public docker repo
-efaf67b0ab12e0cbda87eeb291b6816da6149fca5f1ca3e2079bf612fdd33435
 
+normalizer
+normalizer
+Running docker container from public docker repo
+407986d38c8fd647dd5cf482c1dfbe3f234dbedde4a73b5c007eb3960754bd11
 Normalizing ./inputs/acceptance_sample.csv
+-----------> Normalized acceptance_sample_OUTPUT.csv
 Normalizing ./inputs/acceptance_test_bad_zip.csv
+-----------> Normalized acceptance_test_bad_zip_OUTPUT.csv
 Normalizing ./inputs/acceptance_test_sample-with-broken-utf8.csv
+-----------> Normalized acceptance_test_samplewithbrokenutf8_OUTPUT.csv
 Normalizing ./inputs/empty.csv
 Normalizing ./inputs/null.csv
 
@@ -49,22 +59,47 @@ ERROR: File name ./inputs/null.csv is empty
 Normalizing ./inputs/unit_test_bad-date-broken-utf8.csv
 
 WARNING: Bad Timestamp dropping row containing 11/ü11/11 11:11:11 AM
+
 WARNING: Bad Timestamp dropping row containing 5/12/10? 4:48:12 PM
+-----------> Normalized unit_test_baddatebrokenutf8_OUTPUT.csv
 Normalizing ./inputs/unit_test_bad-hh.mm.ss-broken-utf8.csv
 
 WARNING: Bad Timestamp dropping row containing 1:3�2:33.123
-Copying to host ./acceptance_test_bad_zip_OUTPUT.csv
-
+-----------> Normalized unit_test_badhhmmssbrokenutf8_OUTPUT.csv
 Creating normalized output CSVs in: test/data
-
+Copying to host ./acceptance_test_bad_zip_OUTPUT.csv
 Copying to host ./unit_test_badhhmmssbrokenutf8_OUTPUT.csv
 Copying to host ./unit_test_baddatebrokenutf8_OUTPUT.csv
 Copying to host ./acceptance_test_samplewithbrokenutf8_OUTPUT.csv
 Copying to host ./acceptance_sample_OUTPUT.csv
-
-
-
 ```
 
+## File normalization
 
+File normalizer entails:
 
+* Copying from a sample file from host to container
+* Running normalize-file in the container
+* Copying normalized output from container to host
+
+For file `sample.csv` here are the commands:
+
+```
+docker cp ../data/sample.csv normalizer:opt/normalizer/sample.csv  
+docker exec -it normalizer bash -c "./normalize-file sample.csv"  
+docker cp normalizer:opt/normalizer/sample_OUTPUT.csv ../data/sample_OUTPUT.csv 
+```
+
+### Sample file normalization
+
+```
+docker cp ../data/sample.csv normalizer:opt/normalizer/sample.csv              
+docker exec -it normalizer bash -c "./normalize-file sample.csv"
+                                              
+WARNING: Bad Timestamp dropping row containing 11/ü11/11 11:11:11 AM
+
+WARNING: Bad Timestamp dropping row containing 5/12/10? 4:48:12 PM
+-----------> Normalized  sample_OUTPUT.csv
+docker cp normalizer:opt/normalizer/sample_OUTPUT.csv ../data/sample_OUTPUT.csv
+
+```

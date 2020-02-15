@@ -76,6 +76,7 @@ def normalizer(reader, debug, file_path):
             .replace("csv", "")
 
         writer.to_csv(output_file_name, index=False)
+        print("-----------> Normalized %s" % output_file_name)
 
 
 def remove_bad_rows(data_frame, column_series, method_validator):
