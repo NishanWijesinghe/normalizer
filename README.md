@@ -82,7 +82,12 @@ File normalizer entails:
 * Running normalize-file in the container
 * Copying normalized output from container to host
 
-For file `sample.csv`, run this:
+To restart existing or run a new normalizer container:
+
+* Restart existing: `docker restart normalizer` or
+* New run: `docker run --name normalizer --privileged -itd nishanwij/normalizer:latest`
+
+To normalize `sample.csv`, run this:
 
 ```
 docker cp ../data/sample.csv normalizer:opt/normalizer/sample.csv  
