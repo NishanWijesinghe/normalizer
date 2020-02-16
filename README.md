@@ -76,16 +76,16 @@ Copying to host ./acceptance_sample_OUTPUT.csv
 
 ## File normalization
 
-File normalizer entails:
-
-* Copying a sample file from host to container
-* Running normalize-file in the container
-* Copying normalized output from container to host
-
 To restart existing or run a new normalizer container:
 
 * Restart existing: `docker restart normalizer` or
 * New run: `docker run --name normalizer --privileged -itd nishanwij/normalizer:latest`
+
+Normalizing a file entails:
+
+* Copying a sample file from host to container
+* Running normalize-file in the container
+* Copying normalized output from container to host
 
 To normalize `sample.csv`, run this:
 
